@@ -1,0 +1,4 @@
+Host target
+    HostName target
+    User user
+    IdentityFile ~/.ssh/id_ed25519

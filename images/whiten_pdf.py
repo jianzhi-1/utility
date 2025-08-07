@@ -17,7 +17,7 @@ def clean_background(img, threshold=600):
                 pixels[x, y] = (255, 255, 255)
     return img
 
-def process_pdf(input_pdf_path, output_pdf_path, threshold=600, zoom=2):
+def process_pdf(input_pdf_path, output_pdf_path, threshold=600, zoom=4):
     with tempfile.TemporaryDirectory() as temp_dir:
         doc = fitz.open(input_pdf_path)
         cleaned_images = []
@@ -41,4 +41,6 @@ def process_pdf(input_pdf_path, output_pdf_path, threshold=600, zoom=2):
 if __name__ == "__main__":
     input_pdf = "input.pdf"
     output_pdf = "output.pdf"
-    process_pdf(input_pdf, output_pdf, threshold=500)
+    threshold = 500
+    zoom = 4
+    process_pdf(input_pdf, output_pdf, threshold=threshold, zoom=zoom)

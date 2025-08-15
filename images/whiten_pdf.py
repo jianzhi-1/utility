@@ -1,6 +1,7 @@
+import argparse
 import fitz  # pymupdf
-from PIL import Image
 import os
+from PIL import Image
 import tempfile
 
 def clean_background(img, threshold=600):
@@ -13,8 +14,8 @@ def clean_background(img, threshold=600):
             r, g, b = pixels[x, y]
             if r + g + b > threshold:
                 pixels[x, y] = (255, 255, 255)
-            if min(r, g, b) > 100 and r > 100:
-                pixels[x, y] = (255, 255, 255)
+            # if min(r, g, b) > 100 and r > 100:
+            #     pixels[x, y] = (255, 255, 255)
     return img
 
 def process_pdf(input_pdf_path, output_pdf_path, threshold=600, zoom=4):
@@ -39,8 +40,17 @@ def process_pdf(input_pdf_path, output_pdf_path, threshold=600, zoom=4):
     print(f"PDF saved to: {output_pdf_path}")
 
 if __name__ == "__main__":
-    input_pdf = "input.pdf"
-    output_pdf = "output.pdf"
-    threshold = 500
-    zoom = 4
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filename", type=str)
+    parser.add_argument("-o", "--output", type=str, default="output.pdf")
+    parser.add_argument("-t", "--threshold", type=int, default=500)
+    parser.add_argument("-z", "--zoom", type=int, default=4)
+    args = parser.parse_args()
+
+    input_pdf = f"./{args.filename}"
+    output_pdf = f"./{args.output}"
+
+    threshold = args.threshold
+    zoom = args.zoom
+
     process_pdf(input_pdf, output_pdf, threshold=threshold, zoom=zoom)
